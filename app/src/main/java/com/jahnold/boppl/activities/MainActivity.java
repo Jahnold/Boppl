@@ -1,6 +1,7 @@
 package com.jahnold.boppl.activities;
 
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -8,14 +9,46 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.jahnold.boppl.R;
+import com.jahnold.boppl.adapters.CategoryPagerAdapter;
+import com.jahnold.boppl.models.Category;
+import com.jahnold.boppl.models.ModelFactory;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
+
+    private ViewPager mViewPager;
+    private CategoryPagerAdapter mAdapter;
+    private ActionBar mActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // set up the category tabs
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mActionBar = getSupportActionBar();
+        mAdapter = new CategoryPagerAdapter(getSupportFragmentManager());
+
+        mViewPager.setAdapter(mAdapter);
+        mActionBar.setHomeButtonEnabled(false);
+        mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        ModelFactory.getCategories(new ModelFactory.CategoryLoadListener() {
+            @Override
+            public void onLoadComplete(ArrayList<Category> categories) {
+                for (Category category : categories) {
+                    mActionBar.addTab(
+                            mActionBar.newTab()
+                            .setText(category.getDescription())
+                            .setTabListener(MainActivity.this)
+                    );
+
+                }
+            }
+        });
     }
 
 
