@@ -1,5 +1,7 @@
 package com.jahnold.boppl.models;
 
+import android.util.Log;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
@@ -20,11 +22,14 @@ public class ModelFactory {
     private static final String sService = "https://services.boppl.me/api/v0.0.1";
 
     // listener interface for categories
-    public interface CategoryLoadListener{
+    public interface CategoryLoadListener {
         public void onLoadComplete(ArrayList<Category> categories);
     }
 
-
+    // listener interface for products
+    public interface ProductLoadListener {
+        public void onLoadComplete(ArrayList<Product> products);
+    }
 
     /**
      *  Load all the categories from the RESt API
@@ -71,6 +76,7 @@ public class ModelFactory {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e("Error: ", error.getMessage());
+                Log.d("loading: ", "categories");
             }
         });
 
@@ -79,10 +85,59 @@ public class ModelFactory {
 
     }
 
-    public static ArrayList<Product> getProducts(int categoryId) {
 
-        ArrayList<Product> products = new ArrayList<>();
+    public static void getProducts(int categoryId, final ProductLoadListener listener) {
 
-        return products;
+        final String endpoint = "/api/venues/4/products/categories/" + String.valueOf(categoryId) + "/products";
+
+        // make the request to the RESt API
+        JsonArrayRequest req = new JsonArrayRequest(
+            sService + endpoint,
+            new Response.Listener<JSONArray> () {
+
+                @Override
+                public void onResponse(JSONArray response) {
+
+                    ArrayList<Product> products = new ArrayList<>();
+
+                    try {
+
+                        for (int i=0; i < response.length(); i++) {
+
+                            // get the current category
+                            JSONObject product = response.getJSONObject(i);
+
+                            // create a category object and add the details
+                            Product productObj = new Product();
+                            productObj.setId(product.getInt("id"));
+                            productObj.setImageURL(product.getString("image_thumb_url"));
+                            productObj.setName(product.getString("product_name"));
+                            productObj.setPrice(product.getString("price"));
+
+                            // add to array list
+                            products.add(productObj);
+                        }
+
+
+                    } catch (JSONException e) {
+
+                        e.printStackTrace();
+                    }
+
+                    listener.onLoadComplete(products);
+                }
+
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.e("Error: ", error.getMessage());
+                    Log.d("loading: ", "products");
+                }
+            }
+        );
+
+        // add the request to the queue
+        App.getInstance().addToRequestQueue(req);
     }
 }

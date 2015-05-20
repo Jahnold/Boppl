@@ -47,6 +47,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     );
 
                 }
+                mAdapter.setCategories(categories);
             }
         });
     }

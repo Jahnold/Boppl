@@ -4,23 +4,42 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.jahnold.boppl.fragments.CategoryFragment;
+import com.jahnold.boppl.models.Category;
+
+import java.util.ArrayList;
+
 /**
- * Created by matthewarnold on 20/05/15.
+ *  Pager Adapter
  */
 public class CategoryPagerAdapter extends FragmentPagerAdapter {
 
+    private ArrayList<Category> mCategories = new ArrayList<>();
 
     public CategoryPagerAdapter(FragmentManager fragmentManager) {
+
         super(fragmentManager);
+    }
+
+
+    public void setCategories(ArrayList<Category> categories) {
+        mCategories = categories;
     }
 
     @Override
     public Fragment getItem(int i) {
-        return null;
+
+        // create a category fragment for the category id at position i
+        return CategoryFragment.getInstance(mCategories.get(i).getId());
+
     }
+
+
 
     @Override
     public int getCount() {
-        return 0;
+
+        return mCategories.size();
+
     }
 }
