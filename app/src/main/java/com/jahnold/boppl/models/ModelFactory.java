@@ -88,7 +88,7 @@ public class ModelFactory {
 
     public static void getProducts(int categoryId, final ProductLoadListener listener) {
 
-        final String endpoint = "/api/venues/4/products/categories/" + String.valueOf(categoryId) + "/products";
+        final String endpoint = "/api/venues/4/categories/" + String.valueOf(categoryId) + "/products";
 
         // make the request to the RESt API
         JsonArrayRequest req = new JsonArrayRequest(

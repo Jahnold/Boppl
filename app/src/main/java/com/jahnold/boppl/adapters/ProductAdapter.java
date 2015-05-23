@@ -12,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.NetworkImageView;
+import com.jahnold.boppl.App;
 import com.jahnold.boppl.R;
 import com.jahnold.boppl.models.Product;
 
@@ -55,24 +56,30 @@ public class ProductAdapter extends ArrayAdapter<Product> {
             txtPrice.setText(product.getPrice());
 
             // set the image
-            ImageRequest request = new ImageRequest(
-                    product.getImageURL(),
-                    new Response.Listener<Bitmap>() {
-                        @Override
-                        public void onResponse(Bitmap bitmap) {
-                            productImage.setImageBitmap(bitmap);
-                        }
-                    }, 0, 0, null,
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                        }
-                    }
-            );
+//            ImageRequest request = new ImageRequest(
+//                    product.getImageURL(),
+//                    new Response.Listener<Bitmap>() {
+//                        @Override
+//                        public void onResponse(Bitmap bitmap) {
+//                            productImage.setImageBitmap(bitmap);
+//                        }
+//                    }, 0, 0, null,
+//                    new Response.ErrorListener() {
+//                        @Override
+//                        public void onErrorResponse(VolleyError error) {
+//
+//                        }
+//                    }
+//            );
+            productImage.setImageUrl(product.getImageURL(), App.getInstance().getImageLoader());
 
         }
 
         return convertView;
+    }
+
+    @Override
+    public int getCount() {
+        return mProducts.size();
     }
 }

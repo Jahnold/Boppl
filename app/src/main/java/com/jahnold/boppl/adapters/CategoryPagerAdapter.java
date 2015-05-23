@@ -2,7 +2,7 @@ package com.jahnold.boppl.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.jahnold.boppl.fragments.CategoryFragment;
 import com.jahnold.boppl.models.Category;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  *  Pager Adapter
  */
-public class CategoryPagerAdapter extends FragmentPagerAdapter {
+public class CategoryPagerAdapter extends FragmentStatePagerAdapter {
 
     private ArrayList<Category> mCategories = new ArrayList<>();
 
@@ -35,11 +35,12 @@ public class CategoryPagerAdapter extends FragmentPagerAdapter {
     }
 
 
-
     @Override
     public int getCount() {
 
         return mCategories.size();
 
     }
+
+
 }

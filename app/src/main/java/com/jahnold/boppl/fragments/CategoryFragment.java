@@ -37,7 +37,6 @@ public class CategoryFragment extends Fragment {
     public CategoryFragment() {}
 
     // gets and sets
-    public int getCategoryId() { return mCategoryId;}
     public void setCategoryId(int categoryId) { mCategoryId = categoryId; }
 
     @Override
@@ -66,14 +65,12 @@ public class CategoryFragment extends Fragment {
                     @Override
                     public void onLoadComplete(ArrayList<Product> products) {
 
-                        mAdapter.addAll(products);
+                        mProducts.addAll(products);
+                        mAdapter.notifyDataSetChanged();
                     }
                 }
         );
 
-
-
-
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
     }
 }

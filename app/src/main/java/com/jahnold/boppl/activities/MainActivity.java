@@ -32,7 +32,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         mActionBar = getSupportActionBar();
         mAdapter = new CategoryPagerAdapter(getSupportFragmentManager());
 
+        // set up the view pager and add a listener to update the tabs when the user swipes
         mViewPager.setAdapter(mAdapter);
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                mActionBar.setSelectedNavigationItem(position);
+            }
+        });
+
         mActionBar.setHomeButtonEnabled(false);
         mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -48,6 +57,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
                 }
                 mAdapter.setCategories(categories);
+                mAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -78,6 +88,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 
+        // update the view pager to the selected tab
+        mViewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override
