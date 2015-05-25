@@ -11,6 +11,8 @@
         android:layout_height="match_parent"
         android:numColumns="3"
         android:columnWidth="80dp"
+        android:background="#fff"
+        android:stretchMode="spacingWidthUniform"
         >
 
     </GridView>

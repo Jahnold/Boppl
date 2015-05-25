@@ -2,7 +2,24 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+
+        <item name="android:actionBarTabBarStyle">@style/MyActionBarTabBackground</item>
+        <item name="actionBarTabBarStyle">@style/MyActionBarTabBackground</item>
+
+        <item name="android:actionBarTabStyle">@style/MyActionBarTabBackground</item>
+        <item name="actionBarTabStyle">@style/MyActionBarTabBackground</item>
+
+        <item name="android:actionBarTabTextStyle">@style/MyActionBarTabText</item>
+        <item name="actionBarTabTextStyle">@style/MyActionBarTabText</item>
+
+    </style>
+
+    <style name="MyActionBarTabBackground" parent="@style/Widget.AppCompat.Light.ActionBar.TabView">
+        <item name="android:background">@color/tab_bar_background</item>
+    </style>
+
+    <style name="MyActionBarTabText" parent="@style/Widget.AppCompat.Light.ActionBar.TabText">
+        <item name="android:textColor">@drawable/tab_bar_text_color</item>
     </style>
 
 </resources>

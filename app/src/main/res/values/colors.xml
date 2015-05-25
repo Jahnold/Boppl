@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="price_font_color">#333</color>
+    <color name="tab_bar_background">#BC0227</color>
+    <color name="tab_bar_text_normal">#111</color>
+    <color name="tab_bar_text_selected">#fff</color>
+</resources>

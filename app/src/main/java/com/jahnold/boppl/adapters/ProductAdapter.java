@@ -1,22 +1,22 @@
 package com.jahnold.boppl.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.jahnold.boppl.App;
 import com.jahnold.boppl.R;
 import com.jahnold.boppl.models.Product;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  *  Product Adapter
@@ -51,26 +51,15 @@ public class ProductAdapter extends ArrayAdapter<Product> {
             TextView txtPrice = (TextView) convertView.findViewById(R.id.txt_price);
             TextView txtName = (TextView) convertView.findViewById(R.id.txt_name);
 
-            // set the text
+            // set the name text
             txtName.setText(product.getName());
-            txtPrice.setText(product.getPrice());
+
+            // format and set the price text
+            Locale uk = new Locale("en", "GB");
+            NumberFormat nf = NumberFormat.getCurrencyInstance(uk);
+            txtPrice.setText(nf.format(new BigDecimal(product.getPrice())));
 
             // set the image
-//            ImageRequest request = new ImageRequest(
-//                    product.getImageURL(),
-//                    new Response.Listener<Bitmap>() {
-//                        @Override
-//                        public void onResponse(Bitmap bitmap) {
-//                            productImage.setImageBitmap(bitmap);
-//                        }
-//                    }, 0, 0, null,
-//                    new Response.ErrorListener() {
-//                        @Override
-//                        public void onErrorResponse(VolleyError error) {
-//
-//                        }
-//                    }
-//            );
             productImage.setImageUrl(product.getImageURL(), App.getInstance().getImageLoader());
 
         }
